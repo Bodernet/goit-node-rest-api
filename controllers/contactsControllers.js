@@ -3,6 +3,7 @@ import {
   getContactById,
   removeContact,
   addContact,
+  updContact,
 } from "../services/contactsServices.js";
 import {
   createContactSchema,
@@ -73,19 +74,24 @@ export const createContact = (req, res) => {
 };
 
 export const updateContact = (req, res) => {
-  if (!Object.keys(req.body).length) {
+  const id = req.params.id;
+  const contact = req.body;
+
+  if (!Object.keys(contact).length) {
     return res
       .status(400)
       .json({ message: "Body must have at least one field" });
   }
-  const { error } = updateContactSchema.validate(req.body, {
+
+  const { error } = updateContactSchema.validate(contact, {
     abortEarly: false,
   });
+
   if (error) {
     return res.status(400).json({ message: error.message });
   }
 
-  updateContact(req.params.id, req.body)
+  updContact(id, contact)
     .then((updatedContact) => {
       if (updatedContact) {
         res.status(200).json(updatedContact);

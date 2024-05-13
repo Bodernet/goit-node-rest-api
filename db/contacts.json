@@ -1,20 +1,27 @@
 [
   {
-    "name": "Allen Raymond111",
+    "id": "AeHIrLTr6JkxGE6SN-0Rw",
+    "name": "Allen Raymond1111",
     "email": "nulla.ante@vestibul.co.uk",
-    "phone": "(992) 914-3792",
-    "contactId": "AeHIrLTr6JkxGE6SN-0Rw"
+    "phone": "(992) 914-3792"
   },
   {
+    "id": "qdggE76Jtbfd9eWJHrssH",
+    "name": "Chaim Lewis",
+    "email": "dui.in@egetlacus.ca",
+    "phone": "(294) 840-6685"
+  },
+  {
+    "id": "drsAJ4SHPYqZeG-83QTVW",
     "name": "Kennedy Lane",
     "email": "mattis.Cras@nonenimMauris.net",
-    "phone": "(542) 451-7038",
-    "contactId": "drsAJ4SHPYqZeG-83QTVW"
+    "phone": "(542) 451-7038"
   },
   {
-    "name": "Wylie Pope12",
-    "phone": "(692) 802-2949",
-    "contactId": "vza2RIzNGIwutCVCs4mCL"
+    "id": "vza2RIzNGIwutCVCs4mCL",
+    "name": "Wylie Pope",
+    "email": "est@utquamvel.net",
+    "phone": "(692) 802-2949"
   },
   {
     "id": "05olLMgyVQdWRwgKfg5J6",
@@ -42,7 +49,7 @@
   },
   {
     "id": "e6ywwRe4jcqxXfCZOj_1e",
-    "name": "Thomas Lucas 1222",
+    "name": "Thomas Lucas",
     "email": "nec@Nulla.com",
     "phone": "(704) 398-7993"
   },
@@ -53,43 +60,11 @@
     "phone": "(748) 206-2688"
   },
   {
-    "id": "2fc7898b-475d-430b-9557-ecf29bdc7ead",
+    "id": "305183d9-d013-4189-86af-195856d216d0",
     "name": {
-      "name": "Bobo",
-      "email": "bobo@meta.ua",
-      "phone": 74820626
-    }
-  },
-  {
-    "id": "db4d93f8-e65a-4134-9a5b-552d79a40483",
-    "name": {
-      "name": "Bobo",
-      "email": "bobo@meta.ua",
-      "phone": 74820626
-    }
-  },
-  {
-    "id": "6e84d1d4-5e5d-4c24-a573-78f4be09b27b",
-    "name": {
-      "name": "Bobo",
-      "email": "bobo@meta.ua",
-      "phone": 74820626
-    }
-  },
-  {
-    "id": "28195c6b-eb6c-451a-8799-794627e782ae",
-    "name": {
-      "name": "Thomas Lucas 1222",
-      "email": "nec@Nulla.com",
-      "phone": "(704) 398-7993"
-    }
-  },
-  {
-    "id": "ff7ed83f-8ee7-4772-9ce6-d0e3e8938ee8",
-    "name": {
-      "name": "Thomas Lucas 589412",
-      "email": "nec@Nulla.com",
-      "phone": "(704) 398-7993"
+      "name": "БОБО",
+      "email": "nulla.ante@vestibul.co.uk",
+      "phone": "(992) 914-3792"
     }
   }
 ]

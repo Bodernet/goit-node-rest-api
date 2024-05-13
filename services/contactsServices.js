@@ -39,7 +39,7 @@ async function removeContact(contactId) {
   return removedContact;
 }
 
-async function addContact(name, email, phone) {
+async function addContact({ name, email, phone }) {
   const contacts = await readContacts();
   const newСontact = {
     id: crypto.randomUUID(),

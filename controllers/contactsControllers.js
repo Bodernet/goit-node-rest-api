@@ -61,12 +61,7 @@ export const createContact = (req, res) => {
   }
   addContact(req.body)
     .then((contact) => {
-      res.status(201).json({
-        id: crypto.randomUUID(),
-        name: value.name,
-        email: value.email,
-        phone: value.phone,
-      });
+      res.status(201).json(contact);
     })
     .catch((err) => {
       res.status(500).json({ message: err.message });

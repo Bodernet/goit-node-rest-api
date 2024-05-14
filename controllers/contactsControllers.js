@@ -47,17 +47,13 @@ export const createContact = (req, res) => {
     email: req.body.email,
     phone: req.body.phone,
   };
-  const { error, value } = createContactSchema.validate(bodyContact, {
+  const { error } = createContactSchema.validate(bodyContact, {
     abortEarly: false,
   });
-  if (typeof error !== "undefined") {
+  if (error) {
     return res
       .status(400)
-      .send(
-        error.details
-          .map((error) => error.message)
-          .join({ message: err.message })
-      );
+      .json(error.details.map((error) => error.message).join(", "));
   }
   addContact(req.body)
     .then((contact) => {

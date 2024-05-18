@@ -72,11 +72,6 @@ export async function updateContact(req, res) {
 export async function updateStatusContact(req, res) {
   const { id } = req.params;
   const { favorite } = req.body;
-
-  if (typeof favorite !== "boolean") {
-    return res.status(400).json({ message: "Favorite must be a boolean" });
-  }
-
   try {
     const updatedContact = await Contact.findByIdAndUpdate(
       id,
@@ -85,12 +80,11 @@ export async function updateStatusContact(req, res) {
         new: true,
       }
     );
-
     if (!updatedContact) {
       return res.status(404).json({ message: "Not found" });
     }
 
-    res.status(200).json(result);
+    res.status(200).json(updatedContact);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

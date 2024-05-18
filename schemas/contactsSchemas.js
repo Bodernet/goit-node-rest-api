@@ -31,9 +31,9 @@ export const updateContactSchema = (req, res, next) => {
 
 export const updateFavoriteSchema = (req, res, next) => {
   const schema = Joi.object({
-    name: Joi.string(),
-    email: Joi.string(),
-    phone: Joi.string(),
+    // name: Joi.string(),
+    // email: Joi.string(),
+    // phone: Joi.string(),
     favorite: Joi.boolean().required(),
   });
   const { error } = schema.validate(req.body);

@@ -31,9 +31,6 @@ export const updateContactSchema = (req, res, next) => {
 
 export const updateFavoriteSchema = (req, res, next) => {
   const schema = Joi.object({
-    // name: Joi.string(),
-    // email: Joi.string(),
-    // phone: Joi.string(),
     favorite: Joi.boolean().required(),
   });
   const { error } = schema.validate(req.body);
@@ -43,21 +40,31 @@ export const updateFavoriteSchema = (req, res, next) => {
   next();
 };
 
-const contactSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, "Set name for contact"],
+const contactSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "Set name for contact"],
+    },
+    email: {
+      type: String,
+    },
+    phone: {
+      type: String,
+    },
+    favorite: {
+      type: Boolean,
+      default: false,
+    },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+    },
   },
-  email: {
-    type: String,
-  },
-  phone: {
-    type: String,
-  },
-  favorite: {
-    type: Boolean,
-    default: false,
-  },
-});
+  {
+    versionKey: false,
+    timestamps: true,
+  }
+);
 
 export const Contact = mongoose.model("Contact", contactSchema);

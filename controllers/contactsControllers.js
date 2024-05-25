@@ -2,7 +2,7 @@ import { Contact } from "../schemas/contactsSchemas.js";
 
 export async function getAllContacts(req, res) {
   try {
-    const result = await Contact.find();
+    const result = await Contact.find({ owner: req.user.id });
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -12,7 +12,7 @@ export async function getAllContacts(req, res) {
 export async function getOneContact(req, res) {
   const { id } = req.params;
   try {
-    const result = await Contact.findById(id);
+    const result = await Contact.findById({ _id: id, owner: req.user.id });
     if (result === null) {
       return res.status(404).send({ message: "Not found" });
     }
@@ -25,7 +25,10 @@ export async function getOneContact(req, res) {
 export async function deleteContact(req, res) {
   const { id } = req.params;
   try {
-    const result = await Contact.findByIdAndDelete(id);
+    const result = await Contact.findByIdAndDelete({
+      _id: id,
+      owner: req.user.id,
+    });
     if (result === null) {
       return res.status(404).send({ message: "Not found" });
     }
@@ -41,9 +44,10 @@ export async function createContact(req, res) {
     email: req.body.email,
     phone: req.body.phone,
     favorite: req.body.favorite,
+    owner: req.user.id,
   };
   try {
-    const result = await Contact.create(bodyContact);
+    const result = await Contact.create(bodyContact, { owner: req.user.id });
     console.log(result);
     res.status(201).json(result);
   } catch (error) {
@@ -59,10 +63,15 @@ export async function updateContact(req, res) {
       email: req.body.email,
       phone: req.body.phone,
       favorite: req.body.favorite,
+      owner: req.user.id,
     };
-    const result = await Contact.findByIdAndUpdate(id, bodyContact, {
-      new: true,
-    });
+    const result = await Contact.findByIdAndUpdate(
+      { _id: id, owner: req.user.id },
+      bodyContact,
+      {
+        new: true,
+      }
+    );
     res.status(201).json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -74,7 +83,7 @@ export async function updateStatusContact(req, res) {
   const { favorite } = req.body;
   try {
     const updatedContact = await Contact.findByIdAndUpdate(
-      id,
+      { _id: id },
       { favorite },
       {
         new: true,

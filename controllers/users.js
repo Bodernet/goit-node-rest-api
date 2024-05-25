@@ -61,6 +61,9 @@ export async function logout(req, res, next) {
 export async function current(req, res, next) {
   try {
     const user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(401).send("Not authorized");
+    }
     res
       .status(200)
       .json({ email: user.email, subscription: user.subscription });

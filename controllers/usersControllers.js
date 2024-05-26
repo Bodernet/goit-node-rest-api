@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { User } from "../schemas/user.js";
+import { User } from "../schemas/usersSchemas.js";
 import jwt from "jsonwebtoken";
 
 export async function register(req, res, next) {
@@ -11,9 +11,14 @@ export async function register(req, res, next) {
     }
     const passwordHash = await bcrypt.hash(password, 10);
 
-    await User.create({ email, password: passwordHash });
+    const postNewUser = await User.create({ email, password: passwordHash });
 
-    res.status(201).json("Registration successfully");
+    res.status(201).json({
+      user: {
+        email: postNewUser.email,
+        subscription: postNewUser.subscription,
+      },
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -31,7 +36,7 @@ export async function login(req, res, next) {
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (isMatch === false) {
-      return res.status(401).send({ message: "Email or password " });
+      return res.status(401).send({ message: "Email or password is wrong" });
     }
     const token = jwt.sign(
       { id: user._id, email: user.email },
@@ -69,5 +74,27 @@ export async function current(req, res, next) {
       .json({ email: user.email, subscription: user.subscription });
   } catch (error) {
     res.status(401).json("Not authorized");
+  }
+}
+
+export async function updSubscription(req, res, next) {
+  try {
+    if (
+      Object.keys(req.body).length !== 1 ||
+      !["starter", "pro", "business"].includes(req.body.subscription)
+    ) {
+      return res.status(400).send({ message: "Choose a new subscription" });
+    }
+    const newSubscription = await User.findByIdAndUpdate(
+      req.user.id,
+      req.body,
+      {
+        new: true,
+      }
+    );
+
+    res.status(200).json(newSubscription);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 }

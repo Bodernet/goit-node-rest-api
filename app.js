@@ -2,10 +2,10 @@ import "dotenv/config";
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
-import authRouter from "./routes/auth.js";
+import authRouter from "./routes/authRouter.js";
 import contactsRouter from "./routes/contactsRouter.js";
 import "./db/db.js";
-import authMiddleware from "./middlewares/auth.js"
+import authMiddleware from "./middlewares/auth.js";
 
 const app = express();
 
@@ -13,7 +13,7 @@ app.use(morgan("tiny"));
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/auth", authRouter);
+app.use("/api/users", authRouter);
 app.use("/api/contacts", authMiddleware, contactsRouter);
 
 app.use((_, res) => {

@@ -2,12 +2,12 @@ import { Contact } from "../schemas/contactsSchemas.js";
 
 export async function getAllContacts(req, res) {
   try {
-    // const { page = 1, limit = 20 } = req.query;
-    // const skip = (page - 1) * limit;
-    const result = await Contact.find(
-      { owner: req.user.id }
-      // {skip, limit}
-    );
+    const { page = 1, limit = 20 } = req.query;
+    const skip = (page - 1) * limit;
+    const limitNumber = parseInt(limit, 10);
+    const result = await Contact.find({ owner: req.user.id })
+      .skip(skip)
+      .limit(limitNumber);
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });

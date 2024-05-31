@@ -5,8 +5,10 @@ import {
   logout,
   current,
   updSubscription,
+  updAvatar,
 } from "../controllers/usersControllers.js";
 import authMiddleware from "../middlewares/auth.js";
+import uploadMiddleware from "../middlewares/upload.js";
 import {
   registerSchema,
   loginSchema,
@@ -20,5 +22,10 @@ authRouter.post("/login", loginSchema, login);
 authRouter.post("/logout", authMiddleware, logout);
 authRouter.get("/current", authMiddleware, current);
 authRouter.patch("/", authMiddleware, subscriptionSchema, updSubscription);
-
+authRouter.patch(
+  "/avatars",
+  authMiddleware,
+  uploadMiddleware.single("avatar"),
+  updAvatar
+);
 export default authRouter;

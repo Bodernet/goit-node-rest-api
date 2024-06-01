@@ -130,9 +130,6 @@ export async function updAvatar(req, res, next) {
     } else {
       return res.status(404).json("Not found");
     }
-    // } catch (error) {
-    //   res.status(500).json({ message: error.message });
-    // }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

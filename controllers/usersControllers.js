@@ -113,32 +113,26 @@ export async function updAvatar(req, res, next) {
       return res.status(401).json({ message: "Not authorized" });
     }
     const newPath = path.resolve("public", "avatars", req.file.filename);
-    Jimp.read(req.file.path)
-      .then((file) => {
-        return file.resize(250, 250).quality(60).write(newPath);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    const avaURL = path.join("avatars", req.file.filename);
+    const file = await Jimp.read(req.file.path);
+    await file.resize(250, 250).quality(60).writeAsync(newPath);
 
     await fs.rename(req.file.path, newPath);
-
-    try {
-      const user = await User.findByIdAndUpdate(
-        req.user.id,
-        { avatar: req.file.filename },
-        { new: true }
-      );
-      if (user) {
-        res.status(200).json({
-          avatarURL: user.avatarURL,
-        });
-      } else {
-        return res.status(404).json("Not found");
-      }
-    } catch (error) {
-      res.status(500).json({ message: error.message });
+    const user = await User.findByIdAndUpdate(
+      req.user.id,
+      { avatarURL: avaURL },
+      { new: true }
+    );
+    if (user) {
+      res.status(200).json({
+        avatarURL: user.avatarURL,
+      });
+    } else {
+      return res.status(404).json("Not found");
     }
+    // } catch (error) {
+    //   res.status(500).json({ message: error.message });
+    // }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

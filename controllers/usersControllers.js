@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import { User } from "../schemas/usersSchemas.js";
 import jwt from "jsonwebtoken";
-import path from "node:path";
+import path from "path";
 import gravatar from "gravatar";
 import Jimp from "jimp";
 import fs from "fs/promises";
@@ -110,12 +110,17 @@ export async function updSubscription(req, res, next) {
 export async function updAvatar(req, res, next) {
   try {
     if (!req.file) {
-      return res.status(401).json({ message: "Not authorized" });
+      return res.status(400).json({ message: "You must add a file" });
     }
     const newPath = path.resolve("public", "avatars", req.file.filename);
     const avaURL = path.join("avatars", req.file.filename);
-    const file = await Jimp.read(req.file.path);
-    await file.resize(250, 250).quality(60).writeAsync(newPath);
+    Jimp.read(req.file.path)
+      .then((file) => {
+        return file.resize(250, 250).quality(60).write(newPath);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
 
     await fs.rename(req.file.path, newPath);
     const user = await User.findByIdAndUpdate(

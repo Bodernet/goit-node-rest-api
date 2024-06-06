@@ -38,6 +38,17 @@ export const subscriptionSchema = (req, res, next) => {
   next();
 };
 
+export const verifySchema = (req, res, next) => {
+  const schema = Joi.object({
+    email: Joi.string().email().required(),
+  });
+  const { error } = schema.validate(req.body);
+  if (error) {
+    return res.status(400).json({ message: error.details[0].message });
+  }
+  next();
+};
+
 const userSchema = new mongoose.Schema(
   {
     password: {
@@ -61,6 +72,14 @@ const userSchema = new mongoose.Schema(
     avatarURL: {
       type: String,
       // default: null,
+    },
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      required: [true, "Verify token is required"],
     },
   },
   {

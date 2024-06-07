@@ -187,6 +187,10 @@ export async function resendVerificationEmail(req, res, next) {
         .json({ message: "Verification has already been passed" });
     }
     const verificationToken = crypto.randomUUID();
+
+    user.verificationToken = verificationToken;
+    await user.save();
+
     mail.sendMail({
       to: email,
       from: "bodernet@meta.ua",
